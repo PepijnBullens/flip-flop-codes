@@ -15,39 +15,37 @@ readFile("../input.txt", (err, data) => {
   if (err) return;
   const lines = data.split(/\r?\n/).filter((line) => line.trim() !== "");
 
-  let highest = [0, null];
-  let commonness = new Map();
-  for (let i = 0; i < lines.length; i++) {
-    let num = parseInt(lines[i]);
-    if (commonness.has(num)) {
-      commonness.set(num, commonness.get(num) + 1);
-    } else {
-      commonness.set(num, 1);
-    }
+  // Find most common number
+  const numberCounts = new Map();
+  let mostCommonNumber = null;
+  let highestCount = 0;
 
-    if (commonness.get(num) > highest[0]) {
-      highest[0] = commonness.get(num);
-      highest[1] = num;
+  for (const line of lines) {
+    const num = parseInt(line);
+    const count = (numberCounts.get(num) || 0) + 1;
+    numberCounts.set(num, count);
+
+    if (count > highestCount) {
+      highestCount = count;
+      mostCommonNumber = num;
     }
   }
 
+  const charCounts = new Map();
   const string = lines.join("");
-  let charCommonness = new Map();
-  for (let i = 0; i < string.length; i++) {
-    const char = string[i];
-    if (charCommonness.has(char)) {
-      charCommonness.set(char, charCommonness.get(char) + 1);
-    } else {
-      charCommonness.set(char, 1);
+
+  for (const char of string) {
+    charCounts.set(char, (charCounts.get(char) || 0) + 1);
+  }
+
+  let leastCommonChar = null;
+  let lowestCount = Infinity;
+  for (const [char, count] of charCounts) {
+    if (count < lowestCount) {
+      lowestCount = count;
+      leastCommonChar = char;
     }
   }
 
-  let lowest = [Infinity, null];
-  for (const [char, count] of charCommonness.entries()) {
-    if (count < lowest[0]) {
-      lowest[0] = count;
-      lowest[1] = char;
-    }
-  }
-  console.log(`${highest[1]}${lowest[1]}`);
+  console.log(`${mostCommonNumber}${leastCommonChar}`);
 });
