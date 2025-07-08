@@ -25,6 +25,12 @@ readFile("../input.txt", (err, data) => {
     }
   }
 
+  coordinates.sort((a, b) => {
+    const distanceA = Math.abs(a[0]) + Math.abs(a[1]);
+    const distanceB = Math.abs(b[0]) + Math.abs(b[1]);
+    return distanceA - distanceB;
+  });
+
   let totalSteps = 0;
   let currentX = 0;
   let currentY = 0;
@@ -32,7 +38,10 @@ readFile("../input.txt", (err, data) => {
   for (let i = 0; i < coordinates.length; i++) {
     const [targetX, targetY] = coordinates[i];
 
-    const steps = Math.abs(targetX - currentX) + Math.abs(targetY - currentY);
+    const steps = Math.max(
+      Math.abs(targetX - currentX),
+      Math.abs(targetY - currentY)
+    );
     totalSteps += steps;
 
     currentX = targetX;

@@ -32,7 +32,10 @@ readFile("../input.txt", (err, data) => {
   for (let i = 0; i < coordinates.length; i++) {
     const [targetX, targetY] = coordinates[i];
 
-    const steps = Math.abs(targetX - currentX) + Math.abs(targetY - currentY);
+    const steps = Math.max(
+      Math.abs(targetX - currentX),
+      Math.abs(targetY - currentY)
+    );
     totalSteps += steps;
 
     currentX = targetX;
