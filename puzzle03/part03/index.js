@@ -17,18 +17,18 @@ function labelBush(r, g, b) {
   const blue = parseInt(b);
 
   if (red === green || red === blue || green === blue) {
-    return "special";
+    return "Special";
   }
 
   if (red > green && red > blue) {
-    return "red";
+    return "Red";
   } else if (green > red && green > blue) {
-    return "gren";
+    return "Green";
   } else if (blue > red && blue > green) {
-    return "blue";
+    return "Blue";
   }
 
-  return "unknown";
+  return "Unknown";
 }
 
 readFile("../input.txt", (err, data) => {
@@ -45,13 +45,13 @@ readFile("../input.txt", (err, data) => {
 
     const label = labelBush(r, g, b);
 
-    if (label === "red") {
+    if (label === "Red") {
       totalPrice += 5;
-    } else if (label === "gren") {
+    } else if (label === "Green") {
       totalPrice += 2;
-    } else if (label === "blue") {
+    } else if (label === "Blue") {
       totalPrice += 4;
-    } else if (label === "special") {
+    } else if (label === "Special") {
       totalPrice += 10;
     }
   }
